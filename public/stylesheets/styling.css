@@ -1,0 +1,21 @@
+
+
+#form {
+  color: red;
+}
+
+.aContact {
+  display: block;
+  float: left;
+}
+
+.formElements {
+  display: block
+}
+.formElements > label {
+  float: left;
+}
+
+.formElements > input {
+  float: left;
+}

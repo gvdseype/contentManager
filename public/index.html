@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./stylesheets/styling.css">
+  <title>Document</title>
+  <script src="/javascripts/jquery.js"></script>
+  <script src="/javascripts/handlebars.js"></script>
+  <script src="/javascripts/script.js"></script>
+
+</head>
+<body>
+  
+  <div id="Contacts">
+    <a href="#">Add Contact</a>
+    <br>
+    <input type="text" placeholder="Search..">
+  </div>
+  
+  <div id="mainBody">
+    <div id="allContacts">
+    
+    </div>
+
+    <div id="searchResults">
+
+    </div>
+
+    <div id="tagResults">
+      <h3><a href="#">Back to all contacts</a></h3>
+      <section id="tagResultsContainer">
+
+      </section>
+    </div>
+  </div>
+
+  <script id="itemMakerTemplate" type="text/x-handlebars">
+    <ul class="aContact">
+      <h2>{{name}}<h3>
+      <h3>Phone Number:</h3>
+      <p>{{number}}</p>
+      <h3>Email:</h3>
+      <p>{{email}}</p>
+      <h3>Tags:</h3>
+      <div>
+        {{#each tags}}
+        {{> tagsPartial}}
+        {{/each}}
+      </div>
+      
+      <a href="api/contacts/{{id}}" value="edit">edit</a>
+      <a href="api/contacts/{{id}}" value="delete">delete</a>
+      </ul>
+  </script>
+
+  <script id="formTemplate" type="text/x-handlebars">
+    <form type={{formType}}>
+      <fieldset>
+        <p>Create Contact</p>
+        <label for="full_name">Full name:</label>
+        <input type="text" name="full_name">
+        <label for="email">Email address:</label>
+        <input type="text" name="email">
+        <label for="phone_number">Telephone number:</label>
+        <input type="number" name="phone_number">
+        <label for="tags">Tags:</label>
+        <input type="text" name="tags">
+        <input id="submitter" type="submit" value="Submit">
+        <input id="cancel" type="submit" value="Cancel">
+      </fieldset>
+    </form>
+  </script>
+
+  <script id="tagsPartial" type="text/x-handlebars">
+    <button>{{this}}</button>
+  </script>
+
+</body>
+</html>
