@@ -110,6 +110,8 @@ class View {
         tempDiv.innerHTML = newContactForm;
         self.mainBody.append(tempDiv)
         self.$allContacts.hide()
+        self.$tagResultsContainer.empty();
+        self.$tagResults.hide();
       }
     })
 
@@ -200,8 +202,6 @@ class View {
           tempDiv.innerHTML = contactHTML;
           self.$tagContainer = $(document.querySelector('#tagResultsContainer'))
           self.$tagContainer.append(tempDiv.firstElementChild)
-          self.$searchResults.empty()
-          self.$searchResults.hide()
           self.$allContacts.hide()
           self.$tagResults.show()
         })
@@ -218,19 +218,7 @@ class View {
       
       if (target.tagName === 'A' && target.getAttribute('value') === 'edit') {
         let siblings = $(target).siblings()
-        let name = siblings[0].textContent;
-        let phoneNumber = siblings[3].textContent
-        let email = siblings[5].textContent
-        let tags = siblings[7].textContent.trim()
-        let tempDiv = document.createElement('div');
-        let newContactForm = self.formTemplate({formType: 'editContact'})
-        tempDiv.innerHTML = newContactForm;
-        tempDiv.querySelector('[name="full_name"]').placeholder = name
-        tempDiv.querySelector('[name="email"]').placeholder = email
-        tempDiv.querySelector('[name="phone_number"]').placeholder = phoneNumber
-        tempDiv.querySelector('[name="tags"]').placeholder = tags
-
-        self.mainBody.append(tempDiv)
+        self.mainBody.append(self.prefillFormHelper(siblings))
         self.$allContacts.hide()
         
         let submitter = document.querySelector('#submitter')
@@ -242,7 +230,7 @@ class View {
           let tagsContent = data.get('tags').split(' ')
           let uniqueTags = [...new Set(tagsContent)].join(',')
           data.set('tags', uniqueTags)
-          if (self.validateData(data)) {
+          if (self.validateDataHelper(data)) {
             console.log('test')
             let path = target.href
             let dataString = new URLSearchParams(data).toString();
@@ -265,7 +253,7 @@ class View {
         let tagsContent = data.get('tags').split(' ')
         let uniqueTags = [...new Set(tagsContent)].join(',')
         data.set('tags', uniqueTags)
-        if (self.validateData(data)) {
+        if (self.validateDataHelper(data)) {
           let dataString = new URLSearchParams(data).toString();
           handler(dataString)
         } 
@@ -290,7 +278,7 @@ class View {
     })
   }
 
-  validateData(data) {
+  validateDataHelper(data) {
     let self = this
     let name = data.get('full_name')
     let email = data.get('email')
@@ -298,7 +286,7 @@ class View {
     let tags = data.get('tags')
     if (name.length > 0 && email.length > 0 && tags.length >0) {
       if (String(phone_number).length === 10) {
-        if (self.validateEmail(email)) {
+        if (self.validateEmailHelper(email)) {
           return true
         } 
       } else {
@@ -311,14 +299,30 @@ class View {
     }
   }
   
-   validateEmail(mail) {
+   validateEmailHelper(mail) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
       return (true)
     } else {
-      alert("You have entered an invalid email address!")
+      alert("The email address is invalid.")
       return (false)
     }
    }
+
+   prefillFormHelper(siblings) {
+    let self = this;
+    let name = siblings[0].textContent;
+    let phoneNumber = siblings[3].textContent
+    let email = siblings[5].textContent
+    let tags = siblings[7].textContent.trim()
+    let tempDiv = document.createElement('div');
+    let newContactForm = self.formTemplate({formType: 'editContact'})
+    tempDiv.innerHTML = newContactForm;
+    tempDiv.querySelector('[name="full_name"]').placeholder = name
+    tempDiv.querySelector('[name="email"]').placeholder = email
+    tempDiv.querySelector('[name="phone_number"]').placeholder = phoneNumber
+    tempDiv.querySelector('[name="tags"]').placeholder = tags
+    return tempDiv
+  }
    
 }
 
