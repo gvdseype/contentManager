@@ -177,8 +177,9 @@ class View {
     } else {
       self.$searchResults.empty()
       let tempH3 = document.createElement('H3');
-      tempH3.textContent = `There are no results for "${view.searchBar.value}".`
+      tempH3.textContent = `There are no results for "${self.searchBar.value}".`
       self.$searchResults.append(tempH3)
+      self.$searchResults.show()
     }
 
   }
