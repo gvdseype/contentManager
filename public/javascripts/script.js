@@ -22,7 +22,7 @@ class Model {
         return true
       }
     })
-    callback(result, template);
+    return result
   }
 
   findMatchingTags(tag) {
@@ -143,7 +143,7 @@ class View {
       let value = self.searchBar.value
       
       if (value.length > 0) {
-        handler(value, self.itemTemplate)
+        self.displaySearchResults(handler(value))
         self.$allContacts.hide()
         self.$searchResults.show()
 
@@ -156,13 +156,13 @@ class View {
     })
   }
 
-  displaySearchResults(result, view) {
+  displaySearchResults(result) {
     let uniqueArray = []
-    
+    let self = this
     if (result.length > 0) {
       uniqueArray = result.map(function(aResult) {
         let tempDiv = document.createElement('div');
-        let contactHTML = view.itemTemplate({
+        let contactHTML = self.itemTemplate({
         name: aResult.full_name,
         number: aResult.phone_number,
         email: aResult.email,
@@ -172,13 +172,13 @@ class View {
       tempDiv.innerHTML = contactHTML;
       return tempDiv
       })
-      view.$searchResults.empty()
-      uniqueArray.forEach(aDiv => view.$searchResults.append(aDiv))
+      self.$searchResults.empty()
+      uniqueArray.forEach(aDiv => self.$searchResults.append(aDiv))
     } else {
-      view.$searchResults.empty()
+      self.$searchResults.empty()
       let tempH3 = document.createElement('H3');
       tempH3.textContent = `There are no results for "${view.searchBar.value}".`
-      view.$searchResults.append(tempH3)
+      self.$searchResults.append(tempH3)
     }
 
   }
@@ -389,7 +389,7 @@ class Controller {
   }
 
   onValueSearched = (searchItem) => {
-    this.model.findMatchingContacts(searchItem, this.view.displaySearchResults, this.view)
+    return this.model.findMatchingContacts(searchItem)
   }
 
   onTagSearch = (tagText) => {
