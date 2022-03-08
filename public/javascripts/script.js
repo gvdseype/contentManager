@@ -339,7 +339,7 @@ class Controller {
 
   getContacts() {
     fetch("/api/contacts", {
-      method: 'GET'
+      method: 'GET' 
     })
     .then(response => response.json())
     .then(json => {
