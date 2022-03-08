@@ -184,7 +184,7 @@ class View {
 
   }
 
-  bindCheckForTags(handler) {
+  checkForTagsView(handler) {
     let self = this;
     document.addEventListener('click', function(event) {
       event.preventDefault();
@@ -210,7 +210,7 @@ class View {
     })
   }
   
-  bindUpdateContactForm(handler) {
+  updateContactFormView(handler) {
     let self = this
     
     document.body.addEventListener('click', function(event) {
@@ -242,7 +242,7 @@ class View {
     })
   }
 
-  bindAddContactForm(handler) {
+  addContactFormView(handler) {
     let self = this
     document.body.addEventListener('click', function(event) {
       event.preventDefault();
@@ -263,7 +263,7 @@ class View {
     })
   }
 
-  bindDeleteContact(handler) {
+  deleteContactView(handler) {
     let self = this;
     document.body.addEventListener('click', function(event) {
       event.preventDefault();
@@ -335,11 +335,11 @@ class Controller {
     
     this.getContacts()
     this.model.bindOnContactListChanged(this.onContactListChanged);
-    this.view.bindAddContactForm(this.handlerAddContact);
-    this.view.bindUpdateContactForm(this.handlerUpdateContact);
-    this.view.bindDeleteContact(this.handleDeleteContact);
+    this.view.addContactFormView(this.handlerAddContact);
+    this.view.updateContactFormView(this.handlerUpdateContact);
+    this.view.deleteContactView(this.handleDeleteContact);
     this.view.retrieveInput(this.onValueSearched)
-    this.view.bindCheckForTags(this.onTagSearch)
+    this.view.checkForTagsView(this.onTagSearch)
   }
 
   getContacts() {
