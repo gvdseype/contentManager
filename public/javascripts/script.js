@@ -13,7 +13,7 @@ class Model {
     this.onContactListChanged = callback
   }
 
-  findMatchingContacts(value, callback, template) {
+  findMatchingContacts(value) {
     let self = this;
     let length = value.length
     let result;
