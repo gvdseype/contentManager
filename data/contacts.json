@@ -14,17 +14,10 @@
     "id": 2
   },
   {
-    "full_name": "George",
-    "phone_number": "7777777777",
-    "email": "george@krishna.com",
-    "tags": "Guitar,Vocalist",
-    "id": 3
-  },
-  {
     "full_name": "John",
-    "phone_number": "0987654321",
+    "phone_number": "0321456789",
     "email": "john@ono.com",
-    "tags": "Guitar,Vocalist,Keyboard",
+    "tags": "Guitar",
     "id": 4
   }
 ]

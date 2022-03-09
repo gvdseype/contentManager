@@ -120,7 +120,10 @@ class View {
       if (event.target.id === 'cancel') {
         let form = event.target.closest('form');
         form.remove()
+        self.$tagResultsContainer.empty()
+        self.$tagResults.hide();
         self.$allContacts.show()
+
       }
     });
 
@@ -190,7 +193,10 @@ class View {
       event.preventDefault();
       let target = event.target
       if (target.tagName === 'BUTTON') {
+        self.$tagContainer = $(document.querySelector('#tagResultsContainer'))
+        self.$tagContainer.empty()
         let results = handler(target.textContent);
+        
         results.forEach(function(aResult) {
           let tempDiv = document.createElement('div');
           let contactHTML = self.itemTemplate({
@@ -201,10 +207,11 @@ class View {
           id: aResult.id
           });
           tempDiv.innerHTML = contactHTML;
-          self.$tagContainer = $(document.querySelector('#tagResultsContainer'))
+          
           self.$tagContainer.append(tempDiv.firstElementChild)
           self.$allContacts.hide()
           self.$tagResults.show()
+          self.$tagContainer.show()
         })
       }
     })
@@ -221,7 +228,7 @@ class View {
         let siblings = $(target).siblings()
         self.mainBody.append(self.prefillFormHelper(siblings))
         self.$allContacts.hide()
-        
+        self.$tagContainer.hide()
         let submitter = document.querySelector('#submitter')
         submitter.addEventListener('click', function(event) {
           event.preventDefault();
@@ -236,6 +243,7 @@ class View {
             let path = target.href
             let dataString = new URLSearchParams(data).toString();
             handler(dataString, path)
+            self.$tagContainer.show()
           }
         })
       }
